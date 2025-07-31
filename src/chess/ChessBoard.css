@@ -1,0 +1,12 @@
+.chess-board {
+    width: 60rem;
+    height: 60rem;
+    margin: 0 auto;
+    display: grid;
+}
+
+.chess-board-row {
+    display:grid;
+    grid-template-columns: repeat(8, 80px);
+    grid-template-rows: repeat(1, 80px);
+}
