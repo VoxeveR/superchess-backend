@@ -1,4 +1,4 @@
-package com.voxever.super_chess;
+package com.voxever.super_chess.util;
 
 import java.security.SecureRandom;
 
