@@ -1,13 +1,16 @@
 package com.voxever.super_chess.config;
 
+
 import com.voxever.super_chess.config.filter.JwtFilter;
+import com.voxever.super_chess.config.jwt.AuthEntryPointJwt;
+import com.voxever.super_chess.config.oauth2.Oauth2LoginSuccessHandler;
 import com.voxever.super_chess.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,21 +29,30 @@ public class SecurityConfig {
 
     private final UserRepository userRepository;
     private final JwtFilter jwtFilter;
+    private final Oauth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
-    public SecurityConfig(UserRepository userRepository, JwtFilter jwtFilter) {
+
+    public SecurityConfig(UserRepository userRepository, JwtFilter jwtFilter, @Lazy Oauth2LoginSuccessHandler oauth2LoginSuccessHandler) {
         this.userRepository = userRepository;
         this.jwtFilter = jwtFilter;
+        this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .cors(Customizer.withDefaults())
+                .cors().disable()
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/oauth2/**").permitAll()
                         .anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults())
+                .oauth2Login(oauth2 -> {
+                    oauth2.successHandler(oauth2LoginSuccessHandler);
+                })
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(new AuthEntryPointJwt())
+                )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
