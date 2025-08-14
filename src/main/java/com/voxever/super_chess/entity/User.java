@@ -32,10 +32,10 @@ public class User implements UserDetails {
     private String email;
 
     @Column(nullable = false, unique = true, name = "USERNAME")
-    private String displayName;
+    private String username;
 
-    @Column(nullable = false)
-    private String masterHash;
+    @Column(nullable = true)
+    private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -88,7 +88,7 @@ public class User implements UserDetails {
     //USERDETAILS
     @Override
     public String getPassword() {
-        return masterHash;
+        return password;
     }
 
     @Override

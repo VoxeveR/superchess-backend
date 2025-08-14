@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -41,7 +42,7 @@ public class AuthService {
     @Transactional
     public ResponseEntity<RegisterResponseDto> register(RegisterRequestDto registerDto) {
         String newUserEmail = registerDto.getEmail();
-        String newUserUsername = registerDto.getDisplayName();
+        String newUserUsername = registerDto.getUsername();
 
         checkIfUserDataAlreadyTaken(newUserUsername, newUserEmail);
         User newUser = createUser(registerDto);
@@ -57,7 +58,7 @@ public class AuthService {
     }
 
     private void checkIfUserDataAlreadyTaken(String username, String email) throws CredentialsAlreadyTakenException {
-        if(userRepo.findByDisplayName(username).isPresent())
+        if(userRepo.findByUsername(username).isPresent())
             throw new CredentialsAlreadyTakenException("Username is taken!");
 
         if(userRepo.findByEmail(email).isPresent())
@@ -66,9 +67,9 @@ public class AuthService {
 
     private User createUser(RegisterRequestDto registerDto){
         User createdUser = User.builder()
-                .displayName(registerDto.getDisplayName())
+                .username(registerDto.getUsername())
                 .email(registerDto.getEmail())
-                .masterHash(encoder.encode(registerDto.getMasterHash()))
+                .password(encoder.encode(registerDto.getPassword()))
                 .isEnabled(false)
                 .build();
 
@@ -86,9 +87,9 @@ public class AuthService {
 
     public ResponseEntity<JwtResponseDto> authenticate(LoginRequestDto request) {
         String email = request.getEmail();
-        String masterHash = request.getMasterHash();
+        String password = request.getPassword();
 
-        authManager.authenticate(new UsernamePasswordAuthenticationToken(email, masterHash));
+        authManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 
         String jwtToken = jwtService.generateToken(userRepo.findByEmail(email).get().getUserId());
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(email);
@@ -120,5 +121,29 @@ public class AuthService {
     public void revokeToken(String token) {
         refreshTokenService.findAndDelete(token);
     }
+
+    public Optional<User> findByEmail(String email) {
+        return userRepo.findByEmail(email);
+    }
+
+    @Transactional
+    public User registerOAuthUser(String email, String username, String signUpMethod) {
+
+        User newUser = User.builder()
+                .email(email)
+                .username(username)
+                .password(null)
+                .isEnabled(true)
+                .build();
+
+        Role userRole = Role.builder()
+                .role("USER")
+                .user(newUser)
+                .build();
+
+        newUser.setRoles(List.of(userRole));
+        return userRepo.save(newUser);
+    }
+
 
 }

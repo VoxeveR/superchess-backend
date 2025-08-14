@@ -18,10 +18,10 @@ public class RegisterRequestDto {
     @NotBlank(message = "Username cannot be blank")
     @Size(min = 4, message = "Username should be at least 4 characters long")
     @JsonProperty("username")
-    private String displayName;
+    private String username;
 
-    @NotBlank(message = "MasterHash cannot be blank")
-    @JsonProperty("master_hash")
-    private String masterHash;
+    @NotBlank(message = "Password cannot be blank")
+    @JsonProperty("password")
+    private String password;
 
 }

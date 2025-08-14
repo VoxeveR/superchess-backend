@@ -15,7 +15,7 @@ public class LoginRequestDto {
     @JsonProperty("email")
     private String email;
 
-    @NotBlank(message = "MasterHash cannot be blank!")
-    @JsonProperty("master_hash")
-    private String masterHash;
+    @NotBlank(message = "Password cannot be blank!")
+    @JsonProperty("password")
+    private String password;
 }
