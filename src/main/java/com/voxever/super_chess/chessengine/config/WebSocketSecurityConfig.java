@@ -1,4 +1,4 @@
-package at.sheldor5.websocket.config;
+package com.voxever.super_chess.chessengine.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
