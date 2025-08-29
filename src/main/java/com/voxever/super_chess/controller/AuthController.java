@@ -1,9 +1,8 @@
-package com.voxever.super_chess.controller.api;
+package com.voxever.super_chess.controller;
 
 import com.voxever.super_chess.dto.auth.*;
 import com.voxever.super_chess.service.auth.AuthService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
