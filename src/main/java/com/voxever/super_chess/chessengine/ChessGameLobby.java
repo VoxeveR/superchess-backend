@@ -9,17 +9,24 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+
 @Setter
 @Getter
-public class ChessGame {
+public class ChessGameLobby {
     private Board board;
 
     private String roomCode;
     private Player playerWhite;
     private Player playerBlack;
     private Color currentTurn;
+    private LobbyStatus lobbyStatus;
     private List<Move> moveHistory;
+
+    public ChessGameLobby(String roomCode, Player host, LobbyStatus lobbyStatus){
+        this.playerWhite = host;
+        this.roomCode = roomCode;
+        this.lobbyStatus = lobbyStatus;
+    }
 
     public void startGame(String nicknameWhite, String nicknameBlack, String roomCode){
         this.board = new Board();
