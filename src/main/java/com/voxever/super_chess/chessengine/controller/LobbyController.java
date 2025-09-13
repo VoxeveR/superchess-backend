@@ -1,5 +1,7 @@
 package com.voxever.super_chess.chessengine.controller;
 
+import com.voxever.super_chess.chessengine.dto.CreateLobbyRequestDto;
+import com.voxever.super_chess.chessengine.dto.JoinLobbyRequestDto;
 import com.voxever.super_chess.chessengine.service.LobbyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -19,15 +21,26 @@ public class LobbyController {
         this.lobbyService = lobbyService;
     }
 
-    @MessageMapping("/createRoom")
-    @SendToUser("/game/roomCode")
-    public String createLobby(@Payload String message, Principal principal) {
-        return lobbyService.createLobby(message, principal);
+    @MessageMapping("/createLobby")
+    @SendToUser("/lobby/lobbyCode")
+    public String createLobby(@Payload CreateLobbyRequestDto request, Principal principal) {
+        return lobbyService.createLobby(request, principal);
     }
 
-    @MessageMapping("/joinRoom")
-    @SendToUser("/game/roomCode")
-    public String joinGame(String message) {
-        return lobbyService.joinLobby();
+    @MessageMapping("/joinLobby")
+    @SendToUser("/lobby/lobbyCode")
+    public String joinGame(@Payload JoinLobbyRequestDto request, Principal principal) {
+        return lobbyService.joinLobby(request, principal);
     }
+
+    //TODO: implement
+    public String leaveLobby(){
+        return "";
+    }
+
+    //TODO: implement
+    public String getLobbies(){
+        return "";
+    }
+
 }

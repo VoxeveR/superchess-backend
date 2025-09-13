@@ -11,6 +11,12 @@ import lombok.Setter;
 public class Move {
     private Position from;
     private Position to;
-    private Piece movedPiece;
-    private Piece capturedPiece;
+
+    public int getFromRow() { return from.getRow(); }
+    public int getFromCol() { return from.getCol(); }
+    public int getToRow()   { return to.getRow(); }
+    public int getToCol()   { return to.getCol(); }
+
+    public int deltaX() { return getToRow() - getFromRow(); }
+    public int deltaY() { return getToCol() - getFromCol(); }
 }

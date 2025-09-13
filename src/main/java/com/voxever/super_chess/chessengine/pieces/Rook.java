@@ -7,13 +7,15 @@ import com.voxever.super_chess.chessengine.Position;
 
 public class Rook extends Piece {
 
-    public Rook(Position position, Color color){
+    public Rook(Position position, Color color) {
         this.position = position;
         this.color = color;
+        this.name="ROOK";
     }
 
     @Override
-    public Boolean isMoveLegal(Move move, Board board) {
-        return null;
+    public boolean isValidMovePattern(Move move) {
+        return move.deltaX() == 0 || move.deltaY() == 0;
     }
+
 }

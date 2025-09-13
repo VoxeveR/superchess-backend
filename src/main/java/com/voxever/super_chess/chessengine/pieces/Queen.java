@@ -10,10 +10,22 @@ public class Queen extends Piece {
     public Queen(Position position, Color color){
         this.position = position;
         this.color = color;
+        this.name="QUEEN";
     }
 
     @Override
-    public Boolean isMoveLegal(Move move, Board board) {
-        return null;
+    public boolean isValidMovePattern(Move move) {
+        int dx = move.deltaX();
+        int dy = move.deltaY();
+
+        if(Math.abs(dx) == Math.abs(dy)){
+            return true;
+        }
+
+        if(dx == 0 || dy == 0){
+            return true;
+        }
+
+        return false;
     }
 }

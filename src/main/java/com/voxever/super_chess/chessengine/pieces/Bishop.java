@@ -10,10 +10,11 @@ public class Bishop extends Piece {
     public Bishop(Position position, Color color){
         this.position = position;
         this.color = color;
+        this.name="BISHOP";
     }
 
     @Override
-    public Boolean isMoveLegal(Move move, Board board) {
-        return true;
+    public boolean isValidMovePattern(Move move) {
+        return Math.abs(move.deltaX()) == Math.abs(move.deltaY());
     }
 }

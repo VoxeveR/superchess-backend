@@ -10,10 +10,14 @@ public class King extends Piece {
     public King(Position position, Color color){
         this.position = position;
         this.color = color;
+        this.name="KING";
     }
 
     @Override
-    public Boolean isMoveLegal(Move move, Board board) {
-        return true;
+    public boolean isValidMovePattern(Move move) {
+        int dx = Math.abs(move.deltaX());
+        int dy = Math.abs(move.deltaY());
+
+        return (dx <= 1 && dy <= 1) && (dx + dy > 0);
     }
 }

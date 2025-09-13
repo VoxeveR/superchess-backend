@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class Position {
-    int x;
-    int y;
+    int row;
+    int col;
 }

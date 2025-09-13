@@ -10,36 +10,14 @@ public class Knight extends Piece {
     public Knight(Position position, Color color) {
         this.position = position;
         this.color = color;
+        this.name="KNIGHT";
     }
 
     @Override
-    public Boolean isMoveLegal(Move move, Board board) {
-        int fromX = move.getFrom().getX();
-        int fromY = move.getFrom().getY();
-        int toX = move.getTo().getX();
-        int toY = move.getTo().getX();
+    public boolean isValidMovePattern(Move move) {
+        int dx = Math.abs(move.deltaX());
+        int dy = Math.abs(move.deltaY());
 
-        //check if move is in straight line
-        if(fromX != toX && fromY != toY){
-            return false;
-        }
-
-        // check if there are no figures on path (without last square)
-        if(fromX == toX){
-            int step = (fromY < toY) ? 1 : -1;
-            for(int i = fromY + step; i != toY; i += step){
-                if(board.getPieceAt(fromX, i) != null) return false;
-            }
-        } else {
-            int step = (fromX < toX) ? 1 : -1;
-            for(int i = fromX + step; i != toX; i += step){
-                if(board.getPieceAt(i, fromY) != null) return false;
-            }
-        }
-
-        Piece target = board.getPieceAt(toX, toY);
-        if(target.getColor() == this.color) return false;
-
-        return true;
+        return (dx == 2 && dy == 1) || (dx == 1 && dy == 2);
     }
 }
