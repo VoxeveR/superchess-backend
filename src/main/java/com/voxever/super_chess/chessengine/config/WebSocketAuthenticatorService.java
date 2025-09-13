@@ -1,9 +1,9 @@
 package com.voxever.super_chess.chessengine.config;
 
-import com.voxever.super_chess.entity.User;
-import com.voxever.super_chess.exception.custom.auth.UserNotFoundException;
-import com.voxever.super_chess.repository.UserRepository;
-import com.voxever.super_chess.service.auth.JwtService;
+import com.voxever.super_chess.auth.entity.User;
+import com.voxever.super_chess.auth.exception.custom.auth.UserNotFoundException;
+import com.voxever.super_chess.auth.repository.UserRepository;
+import com.voxever.super_chess.auth.service.auth.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class WebSocketAuthenticatorService {
         }
 
         String parsedToken = jwtToken.substring(7);
-
+        System.out.println("Authenticated with token" + parsedToken);
         try {
             Long userId = jwtService.extractUserId(parsedToken);
             User user = userRepository.findById(userId)

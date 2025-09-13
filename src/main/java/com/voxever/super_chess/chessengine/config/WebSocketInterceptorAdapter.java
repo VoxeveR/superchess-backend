@@ -22,10 +22,13 @@ public class WebSocketInterceptorAdapter implements ChannelInterceptor {
     }
 
     @Override
-    public Message<?> preSend(@NonNull Message<?> message, @NonNull MessageChannel channel) {
+    public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
+        System.out.println("Received websocket message on endpoint!:" + accessor.getDestination());
+
         if(StompCommand.CONNECT == accessor.getCommand()) {
+            System.out.println("Message type was connect!");
             String jwtToken = accessor.getFirstNativeHeader("Authorization");
 
             UsernamePasswordAuthenticationToken user = webSocketAuthenticatorService.getAuthenticationOrFail(jwtToken);
