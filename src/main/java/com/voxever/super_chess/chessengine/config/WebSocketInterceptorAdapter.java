@@ -1,6 +1,5 @@
 package com.voxever.super_chess.chessengine.config;
 
-import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;

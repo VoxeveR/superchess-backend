@@ -2,7 +2,6 @@ package com.voxever.super_chess.chessengine.controller;
 
 import com.voxever.super_chess.chessengine.dto.*;
 import com.voxever.super_chess.chessengine.service.GameService;
-import jakarta.websocket.OnError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;

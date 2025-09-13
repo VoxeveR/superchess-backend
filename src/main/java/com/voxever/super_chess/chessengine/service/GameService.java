@@ -6,7 +6,6 @@ import com.voxever.super_chess.chessengine.Move;
 import com.voxever.super_chess.chessengine.dto.*;
 import com.voxever.super_chess.chessengine.entity.Lobby;
 import com.voxever.super_chess.chessengine.exception.IllegalMoveException;
-import com.voxever.super_chess.chessengine.pieces.Piece;
 import jakarta.transaction.Transactional;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;

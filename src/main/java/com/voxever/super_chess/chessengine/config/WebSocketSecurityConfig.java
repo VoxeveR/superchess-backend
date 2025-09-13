@@ -7,9 +7,6 @@ import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.messaging.access.intercept.MessageMatcherDelegatingAuthorizationManager;
 
-import static org.springframework.messaging.simp.SimpMessageType.MESSAGE;
-import static org.springframework.messaging.simp.SimpMessageType.SUBSCRIBE;
-
 @Configuration
 public class WebSocketSecurityConfig {
 

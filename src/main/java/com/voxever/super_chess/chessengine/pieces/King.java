@@ -1,6 +1,5 @@
 package com.voxever.super_chess.chessengine.pieces;
 
-import com.voxever.super_chess.chessengine.Board;
 import com.voxever.super_chess.chessengine.Color;
 import com.voxever.super_chess.chessengine.Move;
 import com.voxever.super_chess.chessengine.Position;
